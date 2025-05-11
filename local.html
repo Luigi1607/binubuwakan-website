@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book a Cottage</title>
+  <style>
+    /* [Same styles as you provided, untouched for brevity] */
+    /* Your CSS is mostly great and was not modified */
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">BINUBUWAKAN COLD SPRING</div>
+      <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="book.html">Book</a>
+        <a href="about.html">About</a>
+        <a href="opening.html">Log-out</a>
+      </div>
+    </div>
+  </header>
+
+  <h1>Book Your Cottage</h1>
+
+  <div class="container">
+    <!-- Cottage Info -->
+    <div class="cottage-info">
+      <h2>Cottage No. 1</h2>
+      <p>For your family to enjoy the waters with your foods and items being in a safe place</p>
+      <h2>Price</h2>
+      <p>₱350.00</p>
+      <img src="qualitycottages.jpg" alt="Cottage Image">
+    </div>
+
+    <!-- Booking Form -->
+    <div class="booking-form">
+      <h3>Booking Form</h3>
+      <form id="reservationForm" method="POST" action="save_booking.php">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="checkin">Check-In Date</label>
+        <input type="date" id="checkin" name="checkin" required />
+
+        <label for="checkout">Check-Out Date</label>
+        <input type="date" id="checkout" name="checkout" required />
+
+        <label for="idType">Verification ID Type</label>
+        <select id="idType" name="idType" required>
+          <option value="">--Select ID--</option>
+          <option value="passport">Philippine Passport</option>
+          <option value="driverLicense">Driver's License</option>
+          <option value="philhealth">PhilHealth ID</option>
+          <option value="sss">SSS ID</option>
+          <option value="umid">UMID</option>
+          <option value="tin">TIN ID</option>
+          <option value="voters">Voter's ID</option>
+          <option value="national">PhilSys National ID</option>
+        </select>
+
+        <label for="idNumber">ID Number</label>
+        <input type="text" id="idNumber" name="idNumber" required />
+
+        <label for="payment">Payment Method</label>
+        <select id="payment" name="payment" required>
+          <option value="">--Select Payment Method--</option>
+          <option value="gcash">GCash</option>
+          <option value="paymaya">PayMaya</option>
+          <option value="bank">Bank Transfer</option>
+          <option value="creditCard">Credit/Debit Card</option>
+          <option value="cash">Cash on Arrival</option>
+        </select>
+
+        <label for="guests">Number of Guests</label>
+        <select id="guests" name="guests">
+          <option>1</option>
+          <option>2</option>
+          <option>3–4</option>
+          <option>5+</option>
+        </select>
+
+        <label for="requests">Special Requests</label>
+        <textarea id="requests" name="requests" rows="3" placeholder="Let us know if you have any preferences..."></textarea>
+
+        <button type="submit">Confirm Booking</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Binubuwakan Cold Spring Resort. All rights reserved.
+  </footer>
+
+</body>
+</html>

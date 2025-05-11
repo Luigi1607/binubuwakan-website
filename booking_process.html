@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book a Cottage</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f2f7f6;
+      color: #333;
+      margin: 0;
+    }
+
+    header {
+      background-color: #004d40;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .cottage-info {
+      flex: 1 1 500px;
+    }
+
+    .cottage-info img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .booking-form {
+      flex: 1 1 400px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #00796b;
+      color: white;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    @media(max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+
+    .check-reservation-button {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #00bfa5, #00695c);
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.check-reservation-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.check-reservation-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.check-reservation-button:hover::after {
+  left: 150%;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Book Your Cottage</h1>
+  </header>
+
+  <div class="container">
+    <div class="cottage-info">
+      <label for="cottageSelect">Select Cottage:</label>
+      <select id="cottageSelect"></select>
+
+      <h2 id="cottageTitle">Cottage Title</h2>
+      <p id="cottageDesc">Cottage description will appear here.</p>
+      <img id="cottageImg" src="" alt="Cottage Image">
+    </div>
+
+    <div class="booking-form">
+      <h3>Booking Form</h3>
+      <form id="reservationForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required>
+
+        <label for="checkin">Check-In</label>
+        <input type="datetime-local" id="checkin" required>
+
+        <label for="checkout">Check-Out</label>
+        <input type="datetime-local" id="checkout" required>
+
+        <label for="idType">ID Type</label>
+        <select id="idType" required>
+          <option value="">Select ID</option>
+          <option>Philippine Passport</option>
+          <option>Driver's License</option>
+          <option>PhilHealth ID</option>
+          <option>SSS ID</option>
+          <option>UMID</option>
+          <option>TIN ID</option>
+          <option>Voter's ID</option>
+          <option>National ID</option>
+        </select>
+
+        <label for="idNumber">ID Number</label>
+        <input type="text" id="idNumber" required>
+
+        <label for="payment">Payment Method</label>
+        <select id="payment" required>
+          <option value="">Select Method</option>
+          <option>GCash</option>
+          <option>PayMaya</option>
+          <option>Bank Transfer</option>
+          <option>Credit/Debit Card</option>
+          <option>Cash on Arrival</option>
+        </select>
+
+        <label for="guests">Number of Guests</label>
+        <select id="guests">
+          <option>1</option>
+          <option>2</option>
+          <option>3-4</option>
+          <option>5+</option>
+        </select>
+
+        <label for="requests">Special Requests</label>
+        <textarea id="requests" rows="3"></textarea>
+
+        <button type="submit">Book Now</button>
+      </form>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin: 40px 0;">
+    <a href="book.html" class="check-reservation-button">Go Back</a>
+  </div>
+
+  <script>
+    const cottages = JSON.parse(localStorage.getItem("items")) || [];
+    const cottageSelect = document.getElementById("cottageSelect");
+    const cottageTitle = document.getElementById("cottageTitle");
+    const cottageDesc = document.getElementById("cottageDesc");
+    const cottageImg = document.getElementById("cottageImg");
+
+    function loadCottage(index) {
+      if (!cottages[index]) return;
+      cottageTitle.textContent = cottages[index].title;
+      cottageDesc.innerHTML = `
+        <strong>Price: ₱${cottages[index].price}</strong><br>
+        ${cottages[index].description}
+      `;
+      cottageImg.src = cottages[index].imageUrl;
+    }
+
+    cottages.forEach((item, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = `${index + 1}: ${item.title}`;
+      cottageSelect.appendChild(option);
+    });
+
+    cottageSelect.addEventListener("change", function () {
+      loadCottage(this.value);
+    });
+
+    // Load first cottage by default
+    if (cottages.length > 0) {
+      cottageSelect.value = 0;
+      loadCottage(0);
+    }
+
+    document.getElementById("reservationForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const idNumber = document.getElementById("idNumber").value;
+      const paymentMethod = document.getElementById("payment").value;
+
+      // Retrieve the stored reservation data from localStorage
+      const storedReservations = JSON.parse(localStorage.getItem("requests") || "[]");
+      const userReservation = storedReservations.find(res => res.email === email);
+
+      // Authenticate email, ID, and payment method
+      if (!userReservation) {
+        alert("No reservation found with this email.");
+        return;
+      }
+      if (userReservation.idNumber !== idNumber) {
+        alert("ID number does not match.");
+        return;
+      }
+      if (userReservation.payment !== paymentMethod) {
+        alert("Payment method does not match.");
+        return;
+      }
+
+      const reservation = {
+        name: document.getElementById("name").value,
+        email: email,
+        checkin: document.getElementById("checkin").value,
+        checkout: document.getElementById("checkout").value,
+        idType: document.getElementById("idType").value,
+        idNumber: idNumber,
+        payment: paymentMethod,
+        guests: document.getElementById("guests").value,
+        requests: document.getElementById("requests").value,
+        cottage: cottages[cottageSelect.value],
+        status: "Pending"
+      };
+
+      // Store the reservation
+      storedReservations.push(reservation);
+      localStorage.setItem("requests", JSON.stringify(storedReservations));
+
+      alert("Booking submitted! Redirecting to status page...");
+      this.reset();
+      window.location.href = "pending.html";
+    });
+  </script>
+</body>
+</html>
